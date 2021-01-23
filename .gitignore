@@ -37,3 +37,5 @@ target/
 venv/
 
 .idea/
+guild_eq.csv
+*.pickle

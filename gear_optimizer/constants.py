@@ -10,3 +10,7 @@ MIN_CONSTRAINTS = 'Min. ogr.'
 PLAYER_STRENGTH = 'Siła gracza'
 FILENAME = 'Plik CSV z wyposażeniem'
 INPUT_PICKLE_FILE = './input.pickle'
+BOOTS = "Buty"
+GREAVES = "Nagole"
+HELMETS = "Hełmy"
+ARMOURS = "Zbroje"

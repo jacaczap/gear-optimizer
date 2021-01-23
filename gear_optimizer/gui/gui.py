@@ -9,6 +9,8 @@ from gear_optimizer.constants import INPUT_PICKLE_FILE
 from gear_optimizer.model import GearWithStats
 from gear_optimizer.optimizer import optimizer
 from gear_optimizer.gui import gear_printer
+from gear_optimizer.gui.armory_gui import ArmoryGui
+from gear_optimizer.gui import row_service
 
 Input = namedtuple('Input', ['stats', 'weapon', 'shield', 'shield_stats', 'weights', 'requirements', 'filename'])
 
@@ -17,16 +19,17 @@ class Application:
 
     def __init__(self):
         self.root = tk.Tk()
+        self.root.title("Gear Optimizer")
         self.filename_entry = tk.Entry(self.root)
         self._load_initial_input()
 
     def start_optimizer_with_gui(self):
-        stats = self._show_row('Statystyki -', self.stat_fields, 1)
-        weapon = self._show_row('Broń -', self.weapon_fields, 2)
-        shield = self._show_row('Tarcza -', self.shield_fields, 3)
-        shield_stats = self._show_row('Tarcza -', self.shield_stats_fields, 4)
-        weights = self._show_row('Wagi -', self.weight_fields, 5)
-        requirements = self._show_row('Wymagania -', self.requirements, 6)
+        stats = row_service.show_row('Statystyki -', self.stat_fields, 1, self.root)
+        weapon = row_service.show_row('Broń -', self.weapon_fields, 2, self.root)
+        shield = row_service.show_row('Tarcza -', self.shield_fields, 3, self.root)
+        shield_stats = row_service.show_row('Tarcza -', self.shield_stats_fields, 4, self.root)
+        weights = row_service.show_row('Wagi -', self.weight_fields, 5, self.root)
+        requirements = row_service.show_row('Wymagania -', self.requirements, 6, self.root)
         self._filename_row(7)
 
         user_input_fields = Input(stats, weapon, shield, shield_stats, weights, requirements, self.filename)
@@ -35,25 +38,16 @@ class Application:
                                                                                                             column=0,
                                                                                                             sticky=tk.W,
                                                                                                             pady=4)
+        tk.Button(self.root, text='Odczytaj uzbrojenie do pliku',
+                  command=self._open_armory_gui).grid(row=9,
+                                                      column=1,
+                                                      sticky=tk.W,
+                                                      pady=4)
         tk.Button(self.root, text='Wyjście', command=self.root.quit).grid(row=9,
-                                                                          column=1,
+                                                                          column=2,
                                                                           sticky=tk.W,
                                                                           pady=4)
         self.root.mainloop()
-
-    def _show_row(self, title, fields, row_number):
-        entries = {}
-        column = 1
-        tk.Label(self.root, text=title).grid(row=row_number)
-
-        for field in fields:
-            entry = tk.Entry(self.root)
-            tk.Label(self.root, text=f'{field}:').grid(row=row_number, column=column)
-            entry.grid(row=row_number, column=column + 1)
-            entry.insert(0, fields[field])
-            entries[field] = entry
-            column += 2
-        return entries
 
     def _filename_row(self, row_number):
         tk.Label(self.root, text="Plik z wyposażeniem:").grid(row=row_number)
@@ -73,22 +67,17 @@ class Application:
         user_input_values = self._read_user_input_values(user_input_fields)
         self._save_user_input(user_input_values)
         optimized_gear = optimizer.optimize_gear(user_input_values)
+        optimized_gear.reverse()
         self._show_output(optimized_gear)
 
     def _read_user_input_values(self, user_input_fields: Input) -> Input:
-        stats = self._read_fields(user_input_fields.stats)
-        weapon = self._read_fields(user_input_fields.weapon)
-        shield = self._read_fields(user_input_fields.shield)
-        shield_stats = self._read_fields(user_input_fields.shield_stats)
-        weights = self._read_fields(user_input_fields.weights)
-        requirements = self._read_fields(user_input_fields.requirements)
+        stats = row_service.read_int_fields(user_input_fields.stats)
+        weapon = row_service.read_fields(user_input_fields.weapon)
+        shield = row_service.read_fields(user_input_fields.shield)
+        shield_stats = row_service.read_fields(user_input_fields.shield_stats)
+        weights = row_service.read_fields(user_input_fields.weights)
+        requirements = row_service.read_fields(user_input_fields.requirements)
         return Input(stats, weapon, shield, shield_stats, weights, requirements, user_input_fields.filename)
-
-    def _read_fields(self, user_input_fields):
-        values = {}
-        for field in user_input_fields:
-            values[field] = user_input_fields[field].get()
-        return values
 
     def _load_initial_input(self):
         if os.path.exists(INPUT_PICKLE_FILE):
@@ -108,17 +97,30 @@ class Application:
         self.filename = last_input.filename
 
     def _load_default_input(self):
-        self.stat_fields = {gear_optimizer.constants.PLAYER_STRENGTH: 100, gear_optimizer.constants.MIN_CONSTRAINTS: -10}
-        self.weapon_fields = {gear_optimizer.constants.NAME: 'Kama', gear_optimizer.constants.STRENGTH: 21, gear_optimizer.constants.CONSTRAINTS: -2}
-        self.shield_fields = {gear_optimizer.constants.NAME: 'Honor', gear_optimizer.constants.STRENGTH: 74, gear_optimizer.constants.CONSTRAINTS: -3}
-        self.shield_stats_fields = {gear_optimizer.constants.BONUS: 281, gear_optimizer.constants.FIRE: 28, gear_optimizer.constants.FROST: 0, gear_optimizer.constants.POISON: 0, gear_optimizer.constants.ETHER: 0}
-        self.weight_fields = {gear_optimizer.constants.BONUS: 1, gear_optimizer.constants.FIRE: 1 / 4, gear_optimizer.constants.FROST: 1 / 4, gear_optimizer.constants.POISON: 1 / 4, gear_optimizer.constants.ETHER: 1 / 4}
-        self.requirements = {gear_optimizer.constants.BONUS: 0, gear_optimizer.constants.FIRE: 0, gear_optimizer.constants.FROST: 0, gear_optimizer.constants.POISON: 0, gear_optimizer.constants.ETHER: 0}
+        self.stat_fields = {gear_optimizer.constants.PLAYER_STRENGTH: 100,
+                            gear_optimizer.constants.MIN_CONSTRAINTS: -10}
+        self.weapon_fields = {gear_optimizer.constants.NAME: 'Kama', gear_optimizer.constants.STRENGTH: 21,
+                              gear_optimizer.constants.CONSTRAINTS: -2}
+        self.shield_fields = {gear_optimizer.constants.NAME: 'Honor', gear_optimizer.constants.STRENGTH: 74,
+                              gear_optimizer.constants.CONSTRAINTS: -3}
+        self.shield_stats_fields = {gear_optimizer.constants.BONUS: 281, gear_optimizer.constants.FIRE: 28,
+                                    gear_optimizer.constants.FROST: 0, gear_optimizer.constants.POISON: 0,
+                                    gear_optimizer.constants.ETHER: 0}
+        self.weight_fields = {gear_optimizer.constants.BONUS: 1, gear_optimizer.constants.FIRE: 1 / 4,
+                              gear_optimizer.constants.FROST: 1 / 4, gear_optimizer.constants.POISON: 1 / 4,
+                              gear_optimizer.constants.ETHER: 1 / 4}
+        self.requirements = {gear_optimizer.constants.BONUS: 0, gear_optimizer.constants.FIRE: 0,
+                             gear_optimizer.constants.FROST: 0, gear_optimizer.constants.POISON: 0,
+                             gear_optimizer.constants.ETHER: 0}
         self.filename = './guild_eq.csv'
 
     def _save_user_input(self, user_input: Input):
         with open(INPUT_PICKLE_FILE, 'wb') as last_input_file:
             pickle.dump(user_input, last_input_file)
+
+    def _open_armory_gui(self):
+        armory_gui = ArmoryGui(self.root)
+        armory_gui.read_armory_to_csv()
 
     def _show_output(self, gears_with_stats: list[GearWithStats]):
         output_window = tk.Toplevel(self.root)

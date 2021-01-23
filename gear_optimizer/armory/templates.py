@@ -1,0 +1,7 @@
+STRENGTH_TEMPLATE = 'Wymagana siła:[LT]/b[GT] [LT]span class=[DQ]numer[DQ][GT]{:d}[LT]/span'
+CONSTRAINT_TEMPLATE = 'zwinności i szybkości:[LT]/b[GT] [LT]span class=[DQ]numer[DQ][GT]{:d}%[LT'
+NAME_AND_BONUS_TEMPLATE = 'onmouseout="return nd()" onfocus="this.blur()">{name} <i>(</i><span class="numer"><b>{bonus:d}</b></span><i>)</i>'
+FIRE_TEMPLATE = 'Ochrona od ognia:[LT]/b[GT] [LT]span class=[DQ]numer[DQ][GT]{:d}[LT]/span'
+FROST_TEMPLATE = 'Ochrona od zimna:[LT]/b[GT] [LT]span class=[DQ]numer[DQ][GT]{:d}[LT]/span'
+POISON_TEMPLATE = 'Ochrona od trucizny:[LT]/b[GT] [LT]span class=[DQ]numer[DQ][GT]{:d}[LT]/span'
+ETHER_TEMPLATE = 'Ochrona od eteru:[LT]/b[GT] [LT]span class=[DQ]numer[DQ][GT]{:d}[LT]/span'

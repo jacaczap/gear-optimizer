@@ -12,3 +12,6 @@ class ItemType(AutoName):
     armour = auto()
     greave = auto()
     other = auto()
+
+    def __str__(self):
+        return str(self.value)

@@ -8,9 +8,19 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-There are no additional packages needed, only pure Python
+All required modules are in `requirements.txt` file. Please use:
 
-### Running
+```
+pip install -r requirements.txt
+```
+
+### Running tests
+
+```
+python -m unittest
+```
+
+### Running application
 
 ```
 python optimizer.py

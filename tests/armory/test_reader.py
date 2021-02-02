@@ -37,7 +37,6 @@ class Test(TestCase):
 
         # then
         for item in equipment_in_armory:
-            print(item)
             self.assertNotIn('span', item.name)
             self.assertIsInstance(item.bonus, int)
             self.assertIsInstance(item.constraints, int)

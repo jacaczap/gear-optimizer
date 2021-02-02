@@ -1,7 +1,8 @@
 import itertools
-from typing import Any
 from typing import Iterator, List, Tuple
 
+from gear_optimizer.items.item_filter import filter_items_by_type
+from gear_optimizer.items.item_finder import get_items_of_type
 from gear_optimizer.model import Gear
 from gear_optimizer.model import GearStats
 from gear_optimizer.model import GearWithStats
@@ -12,36 +13,24 @@ from gear_optimizer.model import ScoreWeights
 
 def convert_to_gear_with_stats(items: List[Item], weapon: Item, shield: Item, score_weights: ScoreWeights) -> Iterator[
     GearWithStats]:
-    helmets = _get_items_of_type(items, ItemType.helmet)
-    armours = _get_items_of_type(items, ItemType.armour)
-    greaves = _get_items_of_type(items, ItemType.greave)
-    boots = _get_items_of_type(items, ItemType.boots)
+    helmets = get_items_of_type(items, ItemType.helmet)
+    armours = get_items_of_type(items, ItemType.armour)
+    greaves = get_items_of_type(items, ItemType.greave)
+    boots = get_items_of_type(items, ItemType.boots)
 
     items_possibilities = itertools.product(helmets, armours, greaves, boots)
     return map(lambda gear_possibility: _convert_to_gear_with_stats(gear_possibility, weapon, shield, score_weights),
                items_possibilities)
 
 
-def _get_items_of_type(items: List[Item], item_type: ItemType) -> List[Item]:
-    items_of_type = list(_filter_items_by_type(items, item_type))
-    empty_item = Item('', 0, 0, 0)
-    empty_item.type = item_type
-    items_of_type.append(empty_item)
-    return items_of_type
-
-
 def _convert_to_gear_with_stats(gear_possibility: Tuple[Item], weapon: Item, shield: Item,
                                 score_weights: ScoreWeights) -> GearWithStats:
-    helmet = next(_filter_items_by_type(gear_possibility, ItemType.helmet))
-    armour = next(_filter_items_by_type(gear_possibility, ItemType.armour))
-    greave = next(_filter_items_by_type(gear_possibility, ItemType.greave))
-    boots = next(_filter_items_by_type(gear_possibility, ItemType.boots))
+    helmet = next(filter_items_by_type(gear_possibility, ItemType.helmet))
+    armour = next(filter_items_by_type(gear_possibility, ItemType.armour))
+    greave = next(filter_items_by_type(gear_possibility, ItemType.greave))
+    boots = next(filter_items_by_type(gear_possibility, ItemType.boots))
     gear = Gear(weapon=weapon, shield=shield, helmet=helmet, armour=armour, greave=greave, boots=boots)
     return _calculate_gear_with_stats(gear, score_weights)
-
-
-def _filter_items_by_type(items: Any, item_type: ItemType) -> Iterator[Item]:
-    return filter(lambda item: item.type is item_type, items)
 
 
 def _calculate_gear_with_stats(gear: Gear, score_weights: ScoreWeights) -> GearWithStats:

@@ -11,7 +11,7 @@ def choose_gear(items: List[Item], weapon: Item, shield: Item, requirements: Req
                 score_weights: ScoreWeights) -> List[GearWithStats]:
     gears_with_stats = gear_calculator.convert_to_gear_with_stats(items, weapon, shield, score_weights)
     satisfying_gears = _filter_satisfying_gear(gears_with_stats, requirements)
-    return sorted(satisfying_gears, key=lambda gear_with_stats: gear_with_stats.stats.score)
+    return sorted(satisfying_gears, key=lambda gear_with_stats: gear_with_stats.stats.score, reverse=True)
 
 
 def _filter_satisfying_gear(gears_with_stats, requirements) -> Iterator[GearWithStats]:

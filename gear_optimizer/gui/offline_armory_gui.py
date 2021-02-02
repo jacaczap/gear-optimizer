@@ -1,16 +1,16 @@
 import tkinter as tk
 import tkinter.filedialog
 
-from armory import armory_service
-from constants import BOOTS, GREAVES, HELMETS, ARMOURS
-from gui import row_service
-from gui.row_service import show_row
+from gear_optimizer.armory import armory_service
+from gear_optimizer.constants import BOOTS, GREAVES, HELMETS, ARMOURS
+from gear_optimizer.gui import row_service
+from gear_optimizer.gui.row_service import show_row
 
 
-class ArmoryGui:
+class OfflineArmoryGui:
     def __init__(self, root: tk.Tk):
         self.armory_window = tk.Toplevel(root)
-        self.armory_window.title("Zbrojownia")
+        self.armory_window.title("Zbrojownia offline")
         self.quantities_fields = {ARMOURS: 21, HELMETS: 14, GREAVES: 8, BOOTS: 6}
         self.armory_entry = tk.Entry(self.armory_window)
         self.armory_entry.grid(row=1, column=1)

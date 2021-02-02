@@ -1,5 +1,8 @@
+from typing import List
+
 import gear_optimizer.constants
 from gear_optimizer.csv_mapper import csv_reader
+from gear_optimizer.model import UserInput
 from gear_optimizer.model import GearWithStats
 from gear_optimizer.model import Item
 from gear_optimizer.model import Requirements
@@ -7,7 +10,7 @@ from gear_optimizer.model import ScoreWeights
 from gear_optimizer.optimizer import gear_chooser
 
 
-def optimize_gear(user_input) -> list[GearWithStats]:
+def optimize_gear(user_input: UserInput) -> List[GearWithStats]:
     in_weapon = user_input.weapon
     in_shield = user_input.shield
     in_shield_stats = user_input.shield_stats
@@ -38,9 +41,9 @@ def optimize_gear(user_input) -> list[GearWithStats]:
 
 
 def _optimize_gear(weapon: Item, shield: Item, score_weights: ScoreWeights, requirements: Requirements,
-                   filename: str) -> list[GearWithStats]:
+                   filename: str) -> List[GearWithStats]:
     items = csv_reader.read_gear_csv(filename)
     gears = gear_chooser.choose_gear(items, weapon, shield, requirements, score_weights)
     if len(gears) > 20:
-        return gears[-20:]
+        return gears[:20]
     return gears

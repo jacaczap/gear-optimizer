@@ -1,6 +1,6 @@
 import csv
 from dataclasses import fields, asdict
-from typing import List
+from typing import List, Dict
 
 from gear_optimizer.model import Item
 
@@ -20,7 +20,7 @@ def _prepare_rows(items: List[Item]):
     return map(_change_type_to_string, item_dicts)
 
 
-def _change_type_to_string(item_dict: dict[str, any]) -> dict[str, any]:
+def _change_type_to_string(item_dict: Dict[str, any]) -> Dict[str, any]:
     item_dict['type'] = str(item_dict['type'])
     return item_dict
 

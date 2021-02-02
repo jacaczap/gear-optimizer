@@ -1,10 +1,12 @@
+from typing import Dict, List
+
 from gear_optimizer.armory import parser
 from gear_optimizer.model import Item
 from gear_optimizer import constants
 from gear_optimizer.model import ItemType
 
 
-def read_armory(armory_html: str, quantities: dict[str, int]) -> list[Item]:
+def read_armory(armory_html: str, quantities: Dict[str, int]) -> List[Item]:
     armory_lines = armory_html.splitlines()
     item_lines = filter(_is_requested_item_line, armory_lines)
     items = list(map(parser.parse_equipment_line_to_item, item_lines))
@@ -26,14 +28,14 @@ def _is_not_weapon_nor_shield(armory_line: str):
     return 'Punkty ruchu na atak' not in armory_line and 'Bonus do bloków' not in armory_line
 
 
-def _verify_if_quantities_are_correct(items: list[Item], quantities: dict[str, int]):
+def _verify_if_quantities_are_correct(items: List[Item], quantities: Dict[str, int]):
     quantity_from_html = len(items)
     quantity_from_user = sum(quantities.values())
     if quantity_from_user != quantity_from_html:
         raise ValueError(f'{quantity_from_html} items found in html, but user expected {quantity_from_user}')
 
 
-def _set_correct_item_type(items: list[Item], quantities: dict[str, int]):
+def _set_correct_item_type(items: List[Item], quantities: Dict[str, int]):
     quantity_of_armours = quantities[constants.ARMOURS]
     quantity_of_helmets = quantities[constants.HELMETS]
     quantity_of_greaves = quantities[constants.GREAVES]

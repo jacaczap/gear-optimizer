@@ -15,9 +15,9 @@ class Test(TestCase):
             armory_php = armory_file.read()
         quantities = {constants.ARMOURS: 21, constants.HELMETS: 14, constants.GREAVES: 8, constants.BOOTS: 6}
 
-        expected_first_armour = Item(name='Ciężka kolczuga', strength=162, constraints=-8, bonus=470, fire=0, frost=0,
+        expected_first_armour = Item(name='Ciężka kolczug', strength=162, constraints=-8, bonus=470, fire=0, frost=0,
                                      poison=0, ether=0, type=ItemType.armour)
-        expected_last_armour = Item(name='Łachman', strength=3, constraints=-1, bonus=9, fire=0, frost=0, poison=0,
+        expected_last_armour = Item(name='Łachm', strength=3, constraints=-1, bonus=9, fire=0, frost=0, poison=0,
                                     ether=0, type=ItemType.armour)
         expected_first_helmet = Item(name='Czarny diadem', strength=51, constraints=-2, bonus=212, fire=0, frost=0,
                                      poison=20, ether=78, type=ItemType.helmet)
@@ -27,7 +27,7 @@ class Test(TestCase):
                                      fire=0, frost=49, poison=0, ether=0, type=ItemType.greave)
         expected_last_greave = Item(name='Żelazne nagolenice', strength=92, constraints=-4, bonus=392, fire=0, frost=0,
                                     poison=0, ether=0, type=ItemType.greave)
-        expected_first_boots = Item(name='Bojowe kozaki', strength=117, constraints=-4, bonus=537, fire=0, frost=0,
+        expected_first_boots = Item(name='Bojowe kozak', strength=117, constraints=-4, bonus=537, fire=0, frost=0,
                                     poison=0, ether=0, type=ItemType.boots)
         expected_last_boots = Item(name='Wygodne buty z Diamentem', strength=118, constraints=-2, bonus=643, fire=0,
                                    frost=0, poison=0, ether=0, type=ItemType.boots)

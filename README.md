@@ -1,3 +1,5 @@
+![Python build](https://github.com/jacaczap/gear-optimizer/workflows/Python%20build/badge.svg)
+
 # Gear Optimizer
 
 Gear optimizer for i-rpg.net online game written in Python

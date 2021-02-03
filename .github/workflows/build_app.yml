@@ -25,7 +25,7 @@ jobs:
       - name: Build
         run: |
           pyinstaller optimizer.py
-          compress dist gear_optimizer.zip
+          powershell Compress-Archive dist gear_optimizer.zip
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

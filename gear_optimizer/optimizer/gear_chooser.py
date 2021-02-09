@@ -5,18 +5,20 @@ from gear_optimizer.model import GearWithStats
 from gear_optimizer.model import Item
 from gear_optimizer.model import Requirements
 from gear_optimizer.model import ScoreWeights
+from items import items_comparator
 
 
 def choose_gear(items: List[Item], weapon: Item, shield: Item, requirements: Requirements,
                 score_weights: ScoreWeights) -> List[GearWithStats]:
     gears_with_stats = gear_calculator.convert_to_gear_with_stats(items, weapon, shield, score_weights)
     satisfying_gears = _filter_satisfying_gear(gears_with_stats, requirements)
-    return sorted(satisfying_gears, key=lambda gear_with_stats: gear_with_stats.stats.score, reverse=True)
+    return satisfying_gears
 
 
-def _filter_satisfying_gear(gears_with_stats, requirements) -> Iterator[GearWithStats]:
-    satisfying_gears = list(filter(lambda gear: _gear_satisfies_constraints(gear, requirements), gears_with_stats))
-    best_satisfying_gears = filter(lambda gear: _no_gear_is_obviously_better(gear, satisfying_gears), satisfying_gears)
+def _filter_satisfying_gear(gears_with_stats, requirements) -> List[GearWithStats]:
+    satisfying_gears = filter(lambda gear: _gear_satisfies_constraints(gear, requirements), gears_with_stats)
+    top_gear = _get_only_top_gear(satisfying_gears)
+    best_satisfying_gears = list(filter(lambda gear: _no_gear_is_obviously_better(gear, top_gear), top_gear))
     return best_satisfying_gears
 
 
@@ -35,19 +37,19 @@ def _gear_satisfies_constraints(gear_with_stats: GearWithStats, requirements: Re
     return False
 
 
-def _no_gear_is_obviously_better(this_gear: GearWithStats, other_gears: Iterator[GearWithStats]):
+def _get_only_top_gear(gears: Iterator[GearWithStats]):
+    sorted_gear = sorted(gears, key=lambda gear_with_stats: gear_with_stats.stats.score, reverse=True)
+    if len(sorted_gear) > 300:
+        return sorted_gear[:300]
+
+
+def _no_gear_is_obviously_better(this_gear: GearWithStats, other_gears: List[GearWithStats]):
     this_stats = this_gear.stats
     for other_gear in other_gears:
         if this_gear == other_gear:
             continue
         other_stats = other_gear.stats
-        worse_strength = this_stats.strength >= other_stats.strength
-        worse_constraints = this_stats.constraints <= other_stats.constraints
-        worse_bonus = this_stats.bonus <= other_stats.bonus
-        worse_fire = this_stats.fire <= other_stats.fire
-        worse_frost = this_stats.frost <= other_stats.frost
-        worse_poison = this_stats.poison <= other_stats.poison
-        worse_ether = this_stats.ether <= other_stats.ether
-        if all([worse_strength, worse_constraints, worse_bonus, worse_fire, worse_frost, worse_poison, worse_ether]):
+        is_clearly_worse = items_comparator.is_clearly_worse(this_stats, other_stats)
+        if is_clearly_worse:
             return False
     return True

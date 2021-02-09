@@ -8,7 +8,7 @@ def show_row(title, fields, row_number, root):
 
     for field in fields:
         tk.Label(root, text=f'{field}:').grid(row=row_number, column=column)
-        entry = tk.Entry(root)
+        entry = tk.Entry(root, width=12)
         entry.grid(row=row_number, column=column + 1)
         entry.insert(0, fields[field])
         entries[field] = entry

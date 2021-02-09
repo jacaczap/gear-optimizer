@@ -15,6 +15,6 @@ def _show_output(root, gears_with_stats: List[GearWithStats]):
     output_field = tk.Text(output_window, wrap="none", yscrollcommand=scroll_y.set, xscrollcommand=scroll_x.set)
     scroll_y.config(command=output_field.yview)
     scroll_x.config(command=output_field.xview)
-    output_field.pack(side=tk.LEFT, fill=tk.BOTH)
+    output_field.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
     gear_results = gear_printer.get_gears_as_string(gears_with_stats)
     output_field.insert(tk.END, gear_results)

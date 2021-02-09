@@ -39,6 +39,6 @@ def _get_optional_value_from_line(equipment_line: str, template: str):
 
 
 def _clean_item_name(item_name: str) -> str:
-    cleared_1 = item_name.lstrip('<span class=mana><i>')
-    cleared_2 = cleared_1.lstrip('<span class=song><i>')
-    return cleared_2.rstrip(' </i></span>')
+    cleared_1 = item_name.removeprefix('<span class=mana><i>')
+    cleared_2 = cleared_1.removeprefix('<span class=song><i>')
+    return cleared_2.removesuffix(' </i></span>')

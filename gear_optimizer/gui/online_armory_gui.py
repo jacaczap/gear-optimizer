@@ -26,7 +26,7 @@ class OnlineArmoryGui:
                                                                                               pady=4)
 
     def _start(self):
-        filename = tkinter.filedialog.asksaveasfilename(initialfile='gear', defaultextension='csv')
+        filename = tkinter.filedialog.asksaveasfilename(initialfile='guild_eq', defaultextension='csv')
         session_identifier = self.session_identifier.get()
         armory_service.read_online_armory_to_csv(session_identifier, filename)
         self.armory_window.destroy()

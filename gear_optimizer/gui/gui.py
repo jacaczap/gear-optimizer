@@ -47,7 +47,10 @@ class Application:
 
     def _load_initial_input(self):
         if os.path.exists(INPUT_PICKLE_FILE):
-            self._load_last_input_from_pickle()
+            try:
+                self._load_last_input_from_pickle()
+            except AttributeError:
+                self._load_default_input()
         else:
             self._load_default_input()
 

@@ -28,7 +28,7 @@ class OfflineArmoryGui:
                                                                                               pady=4)
 
     def _start(self, quantities):
-        filename = tkinter.filedialog.asksaveasfilename(initialfile='gear', defaultextension='csv')
+        filename = tkinter.filedialog.asksaveasfilename(initialfile='guild_eq', defaultextension='csv')
         armory_html = self.armory_entry.get()
         quantities_dict = row_service.read_int_fields(quantities)
         armory_service.read_php_armory_to_csv(armory_html, filename, quantities_dict)

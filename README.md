@@ -57,7 +57,7 @@ Please attach also `guild_eq.csv` file to the files.
 
 Wersja aplikacji dla systemu Windows znajduje się w `Releases` pod nazwą `gear_optimizer.zip`. Link poniżej:
 
-https://github.com/jacaczap/gear-optimizer/releases/tag/refs%2Fheads%2Fmaster.
+https://github.com/jacaczap/gear-optimizer/releases.
 
 Jest to jedyne źródło oryginalnego programu. Nie należy korzystać z innych źródeł, gdyż mogą one zawierać złośliwy
 kod.  

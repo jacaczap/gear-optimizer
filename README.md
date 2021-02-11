@@ -15,19 +15,19 @@ purposes.
 All required modules are in `requirements.txt` file. Please use:
 
 ```
-pip install -r requirements.txt
+pip install -r ./src/requirements.txt
 ```
 
 ### Running tests
 
 ```
-python -m unittest
+python -m unittest discover -s ./src
 ```
 
 ### Running application
 
 ```
-python optimizer.py
+python ./src/optimizer.py
 ```
 
 ### Equipment csv file
@@ -46,7 +46,7 @@ pip install pyinstaller
 Then to create executable run:
 
 ```
-pyinstaller optimizer.py
+pyinstaller ./src/optimizer.py
 ```
 
 That's it! You will find en executable file and all additional files in `dist/optimizer`  
@@ -76,7 +76,7 @@ Paczkę `gear_optimizer.zip` rozpakowujemy. Plik startujący aplikację to `opti
 
 Plik z ekwipunkiem ma postać pliku CSV. Można go stworzyć samemu, wzorując się na pliku załączonym do tego
 repozytorium (`guild_eq.csv`). Zalecane jest jednak użycie jednego z dwóch automatycznych mechanizmów zawartych w
-programie.
+programie. Po wygenerowaniu pliku nie trzeba tego robić ponownie, dopóki w gildii nie pojawi się nowe uzbrojenie.
 
 #### Metoda online
 
@@ -141,8 +141,8 @@ Gdy posiadamy już plik z uzbrojeniem, możemy przejść do głównej części o
    ułatwia porównanie.
    ![Wyniki](./readme_images/results.png "Wyniki")
 
-7. Program zapamiętuje wpraowadzone dane (w momencie naciśnięcia `Start`), dlatego po ponownym uruchomieniu, nie
-   będziemy musieli uzupełniać wszystkiego od nowa.
+7. Program zapamiętuje wprowadzone dane (w momencie naciśnięcia `Start`), dlatego po ponownym uruchomieniu, nie będziemy
+   musieli uzupełniać wszystkiego od nowa.
 
 ### Rozwiązywanie problemów
 

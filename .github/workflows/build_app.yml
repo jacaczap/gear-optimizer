@@ -20,7 +20,6 @@ jobs:
           path: src
       - name: Compress
         run: |
-          apt install zip
           zip -r gear_optimizer.zip src/dist/windows
       - name: Create Release
         id: create_release

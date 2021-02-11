@@ -4,7 +4,6 @@ import tkinter.filedialog
 from gear_optimizer.armory import armory_service
 from gear_optimizer.constants import BOOTS, GREAVES, HELMETS, ARMOURS
 from gear_optimizer.gui import row_service
-from gear_optimizer.gui.row_service import show_row
 
 
 class OfflineArmoryGui:
@@ -17,7 +16,7 @@ class OfflineArmoryGui:
 
     def read_armory_to_csv(self):
         tk.Label(self.armory_window, text='Wklej html ze zbrojowni: ').grid(row=1, column=0)
-        quantities = show_row('Ilość w zbrojowni: ', self.quantities_fields, 2, self.armory_window)
+        quantities = row_service.show_row('Ilość w zbrojowni: ', self.quantities_fields, 2, self.armory_window)
         tk.Button(self.armory_window, text='Zapisz do csv', command=lambda q=quantities: self._start(q)).grid(row=3,
                                                                                                               column=0,
                                                                                                               sticky=tk.W,

@@ -5,7 +5,7 @@ from gear_optimizer.gui import gear_printer
 from gear_optimizer.model import GearWithStats
 
 
-def _show_output(root, gears_with_stats: List[GearWithStats]):
+def show_output(root, gears_with_stats: List[GearWithStats]):
     output_window = tk.Toplevel(root)
     output_window.title("Wyniki")
     scroll_y = tk.Scrollbar(output_window)

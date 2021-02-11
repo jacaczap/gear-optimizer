@@ -5,7 +5,7 @@ from gear_optimizer.model import GearWithStats
 from gear_optimizer.model import Item
 from gear_optimizer.model import Requirements
 from gear_optimizer.model import ScoreWeights
-from items import items_comparator
+from gear_optimizer.items import items_comparator
 
 
 def choose_gear(items: List[Item], weapon: Item, shield: Item, requirements: Requirements,
@@ -41,6 +41,7 @@ def _get_only_top_gear(gears: Iterator[GearWithStats]):
     sorted_gear = sorted(gears, key=lambda gear_with_stats: gear_with_stats.stats.score, reverse=True)
     if len(sorted_gear) > 300:
         return sorted_gear[:300]
+    return sorted_gear
 
 
 def _no_gear_is_obviously_better(this_gear: GearWithStats, other_gears: List[GearWithStats]):

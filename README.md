@@ -1,4 +1,5 @@
-![Python build](https://github.com/jacaczap/gear-optimizer/workflows/Python%20build/badge.svg)
+![Build](https://github.com/jacaczap/gear-optimizer/workflows/Build/badge.svg)
+![Test](https://github.com/jacaczap/gear-optimizer/workflows/Test/badge.svg)
 
 # Gear Optimizer
 

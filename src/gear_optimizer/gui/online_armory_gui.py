@@ -2,9 +2,6 @@ import tkinter as tk
 import tkinter.filedialog
 
 from gear_optimizer.armory import armory_service
-from gear_optimizer.constants import BOOTS, GREAVES, HELMETS, ARMOURS
-from gear_optimizer.gui import row_service
-from gear_optimizer.gui.row_service import show_row
 
 
 class OnlineArmoryGui:

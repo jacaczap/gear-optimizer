@@ -8,7 +8,7 @@ from gear_optimizer.gui import defaults
 from gear_optimizer.gui import row_service
 from gear_optimizer.gui.offline_armory_gui import OfflineArmoryGui
 from gear_optimizer.gui.online_armory_gui import OnlineArmoryGui
-from gear_optimizer.gui.output_displayer import _show_output
+from gear_optimizer.gui.output_displayer import show_output
 from gear_optimizer.model import UserInput
 from gear_optimizer.optimizer import optimizer
 
@@ -83,7 +83,7 @@ class Application:
         user_input_values = self._read_user_input_values()
         self._save_user_input(user_input_values)
         optimized_gear = optimizer.optimize_gear(user_input_values)
-        _show_output(self.root, optimized_gear)
+        show_output(self.root, optimized_gear)
 
     def _read_user_input_values(self) -> UserInput:
         stats = row_service.read_int_fields(self.stats_entry)

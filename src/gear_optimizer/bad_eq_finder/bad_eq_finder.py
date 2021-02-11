@@ -1,10 +1,9 @@
-from typing import List, Union
+from typing import List
 
 from gear_optimizer.csv_mapper import csv_reader
 from gear_optimizer.items import item_finder
 from gear_optimizer.model import ItemType, Item
-from items import items_comparator
-from model import GearStats
+from gear_optimizer.items import items_comparator
 
 
 def find_bad_eq(filename: str):
@@ -26,4 +25,4 @@ def _find_obviously_better_items(items: List[Item]):
 
 
 if __name__ == '__main__':
-    find_bad_eq('../../guild_eq.csv')
+    find_bad_eq('../../../guild_eq.csv')

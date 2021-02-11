@@ -1,6 +1,6 @@
 from typing import Union
 
-from model import Item, GearStats
+from gear_optimizer.model import Item, GearStats
 
 
 def is_clearly_worse(item: Union[Item, GearStats], other_item: Union[Item, GearStats]):

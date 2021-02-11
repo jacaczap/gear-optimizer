@@ -4,7 +4,7 @@ from typing import List
 
 from gear_optimizer.model import GearWithStats
 from gear_optimizer.model import Item
-from model import ItemType
+from gear_optimizer.model import ItemType
 
 
 def get_gears_as_string(gears_with_stats: List[GearWithStats]) -> str:

@@ -4,7 +4,6 @@ block_cipher = None
 
 
 a = Analysis(['optimizer.py'],
-             pathex=['C:\\Users\\jacac\\PycharmProjects\\gear-optimizer\\src'],
              binaries=[],
              datas=[],
              hiddenimports=[],

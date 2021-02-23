@@ -6,7 +6,7 @@ from gear_optimizer.model import Item
 
 def read_gear_csv(file_name: str) -> List[Item]:
     items = []
-    with open(file_name, newline='') as csv_file:
+    with open(file_name, newline='', encoding='utf-8') as csv_file:
         gear_reader = csv.DictReader(csv_file, dialect=PolishExcel)
         for item_row in gear_reader:
             item = convert_to_item(item_row)

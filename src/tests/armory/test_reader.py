@@ -13,24 +13,24 @@ class Test(TestCase):
         this_test_dir = os.path.dirname(__file__)
         with open(os.path.join(this_test_dir, 'armory.html'), encoding='utf-8') as armory_file:
             armory_php = armory_file.read()
-        quantities = {constants.ARMOURS: 21, constants.HELMETS: 14, constants.GREAVES: 8, constants.BOOTS: 6}
+        quantities = {constants.ARMOURS: 4, constants.HELMETS: 2, constants.GREAVES: 4, constants.BOOTS: 3}
 
-        expected_first_armour = Item(name='Ciężka kolczug', strength=162, constraints=-8, bonus=470, fire=0, frost=0,
+        expected_first_armour = Item(name='Ornat', strength=54, constraints=-1, bonus=181, fire=0, frost=0,
                                      poison=0, ether=0, type=ItemType.armour)
-        expected_last_armour = Item(name='Łachm', strength=3, constraints=-1, bonus=9, fire=0, frost=0, poison=0,
+        expected_last_armour = Item(name='Smocza zbroja płytow', strength=104, constraints=-6, bonus=359, fire=0, frost=0, poison=70,
                                     ether=0, type=ItemType.armour)
-        expected_first_helmet = Item(name='Czarny diadem', strength=51, constraints=-2, bonus=212, fire=0, frost=0,
-                                     poison=20, ether=78, type=ItemType.helmet)
-        expected_last_helmet = Item(name='Wilczy hełm', strength=4, constraints=-2, bonus=33, fire=0, frost=0, poison=0,
+        expected_first_helmet = Item(name='Goblinska maska z Diamentem', strength=11, constraints=2, bonus=21, fire=39, frost=68,
+                                     poison=0, ether=0, type=ItemType.helmet)
+        expected_last_helmet = Item(name='Szyszak', strength=122, constraints=-2, bonus=336, fire=0, frost=0, poison=0,
                                     ether=0, type=ItemType.helmet)
-        expected_first_greave = Item(name='Lekkie nagolenice z Diamentem', strength=99, constraints=-3, bonus=454,
-                                     fire=0, frost=49, poison=0, ether=0, type=ItemType.greave)
-        expected_last_greave = Item(name='Żelazne nagolenice', strength=92, constraints=-4, bonus=392, fire=0, frost=0,
+        expected_first_greave = Item(name='Filcowe Spodnie', strength=28, constraints=-4, bonus=93,
+                                     fire=0, frost=86, poison=0, ether=0, type=ItemType.greave)
+        expected_last_greave = Item(name='Złodziejskie nagolennik', strength=76, constraints=1, bonus=240, fire=0, frost=0,
                                     poison=0, ether=0, type=ItemType.greave)
-        expected_first_boots = Item(name='Bojowe kozak', strength=117, constraints=-4, bonus=537, fire=0, frost=0,
-                                    poison=0, ether=0, type=ItemType.boots)
-        expected_last_boots = Item(name='Wygodne buty z Diamentem', strength=118, constraints=-2, bonus=643, fire=0,
-                                   frost=0, poison=0, ether=0, type=ItemType.boots)
+        expected_first_boots = Item(name='Buty z wężowej skóry', strength=18, constraints=-6, bonus=72, fire=0, frost=0,
+                                    poison=31, ether=0, type=ItemType.boots)
+        expected_last_boots = Item(name='Trupie buty z Diamentem', strength=8, constraints=0, bonus=16, fire=0,
+                                   frost=73, poison=19, ether=0, type=ItemType.boots)
 
         # when
         equipment_in_armory = reader.read_armory(armory_php, quantities)
@@ -45,11 +45,11 @@ class Test(TestCase):
             self.assertIsInstance(item.frost, int)
             self.assertIsInstance(item.poison, int)
             self.assertIsInstance(item.ether, int)
-        self.assertEqual(len(equipment_in_armory), 49)
-        self.assertEqual(self._count_items_of_type(equipment_in_armory, ItemType.armour), 21)
-        self.assertEqual(self._count_items_of_type(equipment_in_armory, ItemType.helmet), 14)
-        self.assertEqual(self._count_items_of_type(equipment_in_armory, ItemType.greave), 8)
-        self.assertEqual(self._count_items_of_type(equipment_in_armory, ItemType.boots), 6)
+        self.assertEqual(len(equipment_in_armory), 13)
+        self.assertEqual(self._count_items_of_type(equipment_in_armory, ItemType.armour), 4)
+        self.assertEqual(self._count_items_of_type(equipment_in_armory, ItemType.helmet), 2)
+        self.assertEqual(self._count_items_of_type(equipment_in_armory, ItemType.greave), 4)
+        self.assertEqual(self._count_items_of_type(equipment_in_armory, ItemType.boots), 3)
         self.assertIn(expected_first_armour, equipment_in_armory)
         self.assertIn(expected_last_armour, equipment_in_armory)
         self.assertIn(expected_first_helmet, equipment_in_armory)
